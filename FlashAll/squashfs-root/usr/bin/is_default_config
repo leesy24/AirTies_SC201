@@ -1,0 +1,4 @@
+#! /bin/sh
+
+cli query cfgmgr-0:isdefault
+

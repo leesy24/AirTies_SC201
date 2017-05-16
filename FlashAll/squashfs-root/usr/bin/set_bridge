@@ -1,0 +1,23 @@
+#! /bin/sh
+
+cli command cfgmgr-0:begin_transaction pvc-0
+cli set pvc-0:vpi $1
+cli set pvc-0:vci $2
+cli command cfgmgr-0:commit pvc-0
+cli command cfgmgr-0:end_transaction pvc-0
+
+cli command cfgmgr-0:begin_transaction wan-0
+cli set wan-0:linktype bridge
+cli set wan-0:delete_entity pppox:pppox-0
+cli command cfgmgr-0:commit wan-0
+cli command cfgmgr-0:end_transaction wan-0
+
+cli command cfgmgr-0:begin_transaction bridge_vlan-0
+cli set bridge_vlan-0:addIface rfc2684-0
+cli command cfgmgr-0:commit bridge_vlan-0
+cli command cfgmgr-0:end_transaction bridge_vlan-0
+
+cli command cfgmgr-0:save
+sleep 2
+cli command sysmgr-0:reboot
+

@@ -1,0 +1,42 @@
+#!/bin/sh
+
+ledctl blinkon power
+
+PCPID=`cat /var/run/pc.pid`
+kill -16 $PCPID
+
+echo "Waiting for pc exit"
+sleep 5
+
+wget -O $1 $2
+
+if [ "$?" == "0" ]; then
+	sleep 3
+	echo "Download has been successful, killing unnecessary processes..."
+	HOSTAPD=`pidof hostapd`
+	HTTPDPID=`pidof -s httpd`
+	kill -9 $HTTPDPID
+	if [ -f $1 ]; then
+		sleep 2
+		echo "Starting Firmware Upgrade for SKY..."
+		echo "5" > /var/asd/sky_upg
+		psi -o write -t asd
+		psi -o write -t firmware -f $1 -r yes
+		if [ "$?" != "0" ]; then
+			echo "3" > /var/asd/sky_upg
+			psi -o write -t asd
+		fi
+	else
+		echo "Firmware upgrade file does not exist"
+		echo "2" > /var/asd/sky_upg
+		psi -o write -t asd 
+	fi
+else
+	echo "Couldn't get firmware, error code $? "
+	echo "2" > /var/asd/sky_upg
+	psi -o write -t asd 
+fi
+
+kill -15 $HOSTAPD
+sleep 1 
+reboot

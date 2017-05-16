@@ -1,0 +1,4 @@
+#! /bin/sh
+
+cli query dsl-0:uplink
+

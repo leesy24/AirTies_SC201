@@ -1,0 +1,30 @@
+/* 
+ * style_homepage.css
+ * Sky		
+ */
+
+p
+{
+	margin: 1em 0px;
+}
+
+.homepageTable
+{
+	margin-top: 10px;
+}
+
+.homepageTable td
+{
+	width: 50%;
+}
+
+.homepageInfoDiv
+{
+	display: none;
+}
+
+.firmware
+{
+	color: green;
+	font-weight: bold;
+}

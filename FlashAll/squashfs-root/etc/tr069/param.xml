@@ -1,0 +1,193 @@
+<!--Param.xml for Agent-->
+<?xml version="1.0" encoding="UTF-8"?>
+<TR069 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="/root/param.xsd">
+<trf>
+	<obj name="Device" rw="0">
+		<obj name="DeviceInfo" rw="0">
+			<param name="Manufacturer" rw="0" type="s" dev_func="dev_Manufacturer"></param>
+			<param name="ManufacturerOUI" rw="0" type="s" dev_func="dev_ManufacturerOUI"></param>
+			<param name="ModelName" rw="0" type="s" dev_func="dev_asp_request_char#query#sysmgr-0#getenv#param#PRODUCT_ID"></param>
+			<param name="ProductClass" rw="0" type="s" dev_func="dev_ProductClass"></param>
+			<param name="SerialNumber" rw="0" type="s" dev_func="dev_asp_request_char#query#sysmgr-0#getenv#param#SERIAL_NUMBER"></param>
+			<param name="HardwareVersion" rw="0" type="s" dev_func="dev_asp_request_char#query#sysmgr-0#getenv#param#HW_REVISION"></param>
+			<param name="SoftwareVersion" rw="0" type="s" dev_func="dev_asp_request_char#query#sysmgr-0#fwversion"></param>
+			<param name="SpecVersion" rw="0" type="s" dev_func="dev_asp_request_char#get#tr069-0#SPECVERSION" noti_op="cfg:tr069-0 settings/DeviceInfo/SpecVersion"></param>
+			<param name="UpTime" rw="0" type="u" dev_func="dev_UpTime"></param>
+			<param name="Description" rw="0" type="s" dev_func="dev_Description"></param>
+			<param name="EnabledOptions" rw="0" type="s" dev_func="dev_ret_empty_str"></param>
+			<param name="AdditionalHardwareVersion" rw="0" type="s" dev_func="dev_asp_request_char#query#sysmgr-0#getenv#param#HW_REVISION"></param>
+			<param name="AdditionalSoftwareVersion" rw="0" type="s" dev_func="dev_asp_request_char#query#sysmgr-0#fwversion"></param>
+			<param name="DeviceSummary" rw="0" type="s" dev_func="dev_DeviceSummary"></param>
+			<param name="DeviceStatus" rw="0" type="s" dev_func="dev_DeviceStatus"></param>
+			<param name="ProvisioningCode" rw="2" type="s" dev_func="dev_ProvisioningCode"></param>
+			<param name="DeviceLog" rw="0" type="s" dev_func="dev_DeviceLog"></param>
+		</obj>
+		<obj name="Config" rw="0">
+			<param name="ConfigFile" rw="2" type="s" dev_func="dev_configure_ConfigFile" ></param>
+		</obj>
+		<obj name="ManagementServer" rw="0">
+			<param name="URL" rw="2" type="s" dev_func="dev_ManageServer_URL" noti_op="cfg:tr069-0 settings/ManagementServer/URL"></param>
+			<param name="Username" rw="2" type="s" dev_func="dev_ManageServer_Username" noti_op="cfg:tr069-0 settings/ManagementServer/Username"></param>
+			<param name="Password" rw="2" type="s" dev_func="dev_ManageServer_Password" noti_op="cfg:tr069-0 settings/ManagementServer/Password"></param>
+			<param name="PeriodicInformEnable" rw="2" type="b" dev_func="dev_ManageServer_PeriodicInformEnable" noti_op="cfg:tr069-0 settings/ManagementServer/PeriodicInformEnable"></param>
+			<param name="PeriodicInformInterval" rw="2" type="u" dev_func="dev_ManageServer_PeriodicInformInterval" noti_op="cfg:tr069-0 settings/ManagementServer/PeriodicInformInterval"></param>
+			<param name="PeriodicInformTime" rw="2" type="d" dev_func="dev_ManageServer_PeriodicInformTime"></param>
+			<param name="ParameterKey" rw="0" type="s" dev_func="dev_ManageServer_ParameterKey"></param>
+			<param name="ConnectionRequestURL" rw="0" type="s" dev_func="dev_ManageServer_ConnectionRequestURL" noti_op="evt:route-0 EVT_DEFAULT_GW_ASSIGNED"></param>
+			<param name="ConnectionRequestUsername" rw="2" type="s" dev_func="dev_ManageServer_ConnectionRequestUsername" noti_op="cfg:tr069-0 settings/ManagementServer/ConnectionRequestUsername"></param>
+			<param name="ConnectionRequestPassword" rw="2" type="s" dev_func="dev_ManageServer_ConnectionRequestPassword" noti_op="cfg:tr069-0 settings/ManagementServer/ConnectionRequestPassword"></param>
+		</obj>
+		<obj name="GatewayInfo" rw="0">
+			<param name="ManufacturerOUI" rw="0" type="s" dev_func="devGwiManufOUI"></param>
+			<param name="ProductClass" rw="0" type="s" dev_func="devGwiProuctClass"></param>
+			<param name="SerialNumber" rw="0" type="s" dev_func="devGwiSerialNum"></param>
+		</obj>
+		<obj name="Layer2Bridging" rw="0">
+			<param name="BridgeNumberOfEntries" rw="0" type="u" dev_func="dev_Layer2Bridge_BridgeNumberOfEntries"></param>
+			<param name="FilterEnable" rw="2" type="b" dev_func="dev_MACFilter_Enable" noti="evt"></param>
+			<param name="SourceMACAddressFilterList" rw="2" type="s" dev_func="dev_MACFilter_MACAddressList" noti="evt"></param>
+			<obj name="Bridge" rw="2" max="9" obj_dev_func="dev_obj_layer2Bridge" obj_instance_func="get_layer2Bridge_instance">
+				<obj name="0" rw="2">
+					<param name="BridgeKey"    rw="0" type="u" dev_func="dev_Layer2Bridge_BridgeKey"></param>
+					<param name="BridgeEnable" rw="2" type="b" dev_func="dev_Layer2Bridge_BridgeEnable"></param>
+					<param name="BridgeStatus" rw="0" type="s" dev_func="dev_Layer2Bridge_BridgeStatus"></param>
+					<param name="BridgeName"   rw="2" type="s" dev_func="dev_Layer2Bridge_BridgeName"></param>
+					<param name="VLANID"       rw="2" type="u" dev_func="dev_Layer2Bridge_VLANID"></param>
+					<param name="PortNumberOfEntries"  rw="0" type="u" dev_func="dev_Layer2Bridge_PortNumberOfEntries"></param>
+					<obj name="Port" rw="2" max="15" obj_dev_func="dev_obj_layer2Bridge_port" obj_instance_func="get_layer2BridgePort_instance">
+						<obj name="0" rw="2">
+							<param name="PortName" rw="0" type="s" dev_func="dev_Layer2Bridge_PortName"></param>
+							<param name="X_AIRTIES_PortPriority" rw="2" type="u" dev_func="dev_Layer2Bridge_PortPriority"></param>
+							<param name="X_AIRTIES_PortTagging"  rw="2" type="b" dev_func="dev_Layer2Bridge_PortTagging"></param>
+							<param name="X_AIRTIES_PortFilterUnTaged" rw="2" type="b" dev_func="dev_Layer2Bridge_PortFilterUnTaged"></param>
+							<param name="X_AIRTIES_PortFilterUnRegistered" rw="2" type="b" dev_func="dev_Layer2Bridge_PortFilterUnRegistered"></param>
+							<param name="X_AIRTIES_PortAssign" rw="2" type="s" dev_func="dev_Layer2Bridge_PortAssign"></param>
+							<param name="PVID"   rw="2" type="u" dev_func="dev_Layer2Bridge_PVID"></param>
+						</obj>
+					</obj>
+				</obj>
+			</obj>
+		</obj>
+		<obj name="LAN" rw="0">
+			<param name="IPAddress" rw="0" type="s" dev_func="devLanIPAddress"></param>
+			<param name="MACAddress" rw="0" type="s" dev_func="devLanMACAddress"></param>
+		</obj>
+		<obj name="UserInterface" rw="0">
+			<param name="X_AIRTIES_Password" rw="2" type="s" dev_func="dev_LAN_ConfigPassword" noti_op="cfg:sysmgr-0 settings/users/user/root"></param>
+		</obj>
+		<obj name="LANDevice" rw="2" max="9" obj_dev_func="dev_obj_landev" obj_instance_func="get_lan_instance">
+			<obj name="0" rw="2">
+				<param name="LANEthernetInterfaceNumberOfEntries" rw="0" type="u" dev_func="dev_LANDevice_Ethnum" noti_op="evt"></param>
+				<param name="LANUSBInterfaceNumberOfEntries" rw="0" type="u" dev_func="dev_LANDevice_USBnum" noti_op="evt"></param>
+				<param name="LANWLANConfigurationNumberOfEntries" rw="0" type="u" dev_func="dev_LANDevice_WLANnum" noti_op="evt"></param>
+				<obj name="WLANConfiguration" rw="2" max="9" obj_dev_func="dev_obj_wlandev" obj_instance_func="get_wlan_instance">
+					<obj name="0" rw="2" range_start="1" range_end="1">
+						<param name="Status" rw="0" type="s" dev_func="dev_WLAN_Status"></param>
+						<param name="BSSID" rw="0" type="s" dev_func="dev_WLAN_BSSID"></param>
+						<param name="MaxBitRate" rw="2" type="s" dev_func="dev_WLAN_MaxBitRate"></param>
+						<param name="MACAddressControlEnabled" rw="2" type="b" dev_func="dev_WLAN_MACAddressControlEnabled"></param>
+						<param name="KeyPassphrase" rw="2" type="s" dev_func="dev_WLAN_KeyPassphrase"></param>
+						<param name="PossibleChannels" rw="0" type="s" dev_func="dev_WLAN_PossibleChannels"></param>
+						<param name="BasicDataTransmitRates" rw="2" type="s" dev_func="dev_WLAN_BasicDataTransmitRates"></param>
+						<param name="OperationalDataTransmitRates" rw="2" type="s" dev_func="dev_WLAN_OperationalDataTransmitRates"></param>
+						<param name="PossibleDataTransmitRates" rw="0" type="s" dev_func="dev_WLAN_PossibleDataTransmitRates"></param>
+						<param name="InsecureOOBAccessEnabled" rw="2" type="b" dev_func="dev_WLAN_InsecureOOBAccessEnabled"></param>
+						<param name="RadioEnabled" rw="2" type="b" dev_func="dev_WLAN_RadioEnabled"></param>
+						<param name="AutoRateFallBackEnabled" rw="2" type="b" dev_func="dev_WLAN_AutoRateFallBackEnabled"></param>
+						<param name="TotalPSKFailures" rw="0" type="u" dev_func="dev_WLAN_TotalPSKFailures"></param>
+						<param name="DeviceOperationMode" rw="2" type="s" dev_func="dev_WLAN_DeviceOperationMode"></param>
+						<param name="AuthenticationServiceMode" rw="2" type="s" dev_func="dev_WLAN_AuthenticationServiceMode"></param>
+						<param name="TotalBytesSent" rw="0" type="u" dev_func="dev_WLAN_TotalBytesSent"></param>
+						<param name="TotalBytesReceived" rw="0" type="u" dev_func="dev_WLAN_TotalBytesReceived"></param>
+						<param name="TotalPacketsSent" rw="0" type="u" dev_func="dev_WLAN_TotalPacketsSent"></param>
+						<param name="TotalPacketsReceived" rw="0" type="u" dev_func="dev_WLAN_TotalPacketsReceived"></param>
+						<param name="Enable" rw="2" type="b" dev_func="dev_asp_request_int#get#wireless_core-0#enabled" noti_op="cfg:wireless_core-0 settings/enabled"></param>
+						<param name="Channel" rw="2" type="u" dev_func="dev_asp_request_uint#get#wireless_core-0#channel" noti_op="cfg:wireless_core-0 settings/channel"></param>
+						<param name="SSID" rw="2" type="s" dev_func="dev_WLAN_SSID" noti_op="cfg:wireless_ap-%2% settings/ssid"></param>
+						<param name="BeaconType" rw="2" type="s" dev_func="dev_WLAN_BeaconType" noti_op="cfg:wireless_ap-%2% settings/security/mode"></param>
+						<param name="Standard" rw="2" type="s" dev_func="dev_WLAN_Standard" noti_op="cfg:wireless_core-0 settings/txmode"></param>
+						<param name="WEPKeyIndex" rw="2" type="u" dev_func="dev_WLAN_WEPKeyIndex" noti_op="cfg:wireless_ap-%2% settings/security/wep/key_index"></param>
+						<param name="WEPEncryptionLevel" rw="0" type="s" dev_func="dev_WLAN_WEPEncryptionLevel" noti_op="cfg:wireless_ap-%2% settings/security/wep/key_type"></param>
+						<param name="BasicEncryptionModes" rw="0" type="s" dev_func="dev_WLAN_BasicEncryptionModes"></param>
+						<param name="BasicAuthenticationMode" rw="2" type="s" dev_func="dev_WLAN_BasicAuthenticationMode" noti_op="cfg:wireless_ap-%2% settings/security/wep/auth_type"></param>
+						<param name="WPAEncryptionModes" rw="2" type="s" dev_func="dev_WLAN_WPAEncryptionModes" noti_op="cfg:wireless_ap-%2% settings/security/mode"></param>
+						<param name="WPAAuthenticationMode" rw="2" type="s" dev_func="dev_WLAN_WPAAuthenticationMode" noti_op="cfg:wireless_ap-%2% settings/security/wpa/auth_type"></param>
+						<param name="IEEE11iEncryptionModes" rw="2" type="s" dev_func="dev_WLAN_IEEE11iEncryptionModes" noti_op="cfg:wireless_ap-%2% settings/security/mode"></param>
+						<param name="IEEE11iAuthenticationMode" rw="2" type="s" dev_func="dev_WLAN_WPAAuthenticationMode" noti_op="cfg:wireless_ap-%2% settings/security/wpa/auth_type"></param>
+						<param name="BeaconAdvertisementEnabled" rw="2" type="b" dev_func="dev_WLAN_BeaconAdvertisementEnabled" noti_op="cfg:wireless_ap-%2% settings/ssid_hidden"></param>
+						<param name="TotalAssociations" rw="0" type="u" dev_func="dev_WLAN_TotalAssociations"></param>
+						<param name="X_AIRTIES_Band" rw="2" type="u" dev_func="dev_asp_request_uint#get#wireless_core-0#freq"></param>
+						<obj name="AssociatedDevice" rw="2" max="9" obj_dev_func="dev_obj_wlan_assoc" obj_instance_func="dev_WLAN_Associations_inst">
+							<obj name="0" rw="2">
+								<param name="AssociatedDeviceMACAddress" rw="0" type="s" dev_func="dev_WLAN_Assoc_DeviceMACAddress"></param>
+							</obj>
+						</obj>
+						<obj name="WEPKey" rw="2" max="9" obj_dev_func="dev_obj_wep" obj_instance_func="dev_wep_inst">
+							<obj name="0" rw="2">
+								<param name="WEPKey" rw="2" type="s" dev_func="dev_WLAN_WEPKey" noti_op="cfg:wireless_ap-%2% settings/security/wep/key%3+%"></param>
+							</obj>
+						</obj>
+						<obj name="PreSharedKey" rw="2" max="9" obj_dev_func="dev_obj_preshared" obj_instance_func="dev_presharedkey_inst">
+							<obj name="0" rw="2">
+								<param name="KeyPassphrase" rw="2" type="s" dev_func="dev_WLAN_KeyPassphrase" noti_op="cfg:wireless_ap-%2% settings/security/wpa/password"></param>
+							</obj>
+						</obj>
+					</obj>
+				</obj>
+			</obj>
+		</obj>
+		<obj name="Time" rw="0">
+			<param name="Enable" rw="2" type="b" dev_func="dev_asp_request_uint#get#sntp-0#settings#filter#status" set_func="dev_asp_request_uint#set#sntp-0#status" noti_op="cfg:sntp-0 settings/status"></param>
+			<param name="NTPServer1" rw="2" type="s" dev_func="dev_asp_request_char#get#sntp-0#settings#filter#prim_server" set_func="dev_asp_request_char#set#sntp-0#prim_server" noti_op="cfg:sntp-0 settings/prim_server"></param>
+			<param name="NTPServer2" rw="2" type="s" dev_func="dev_asp_request_char#get#sntp-0#settings#filter#secn_server" set_func="dev_asp_request_char#set#sntp-0#secn_server" noti_op="cfg:sntp-0 settings/secn_server"></param>
+			<param name="NTPServer3" rw="2" type="s" dev_func="dev_asp_request_char#get#sntp-0#settings#filter#tert_server" set_func="dev_asp_request_char#set#sntp-0#tert_server" noti_op="cfg:sntp-0 settings/tert_server"></param>
+		</obj>
+	</obj>
+</trf>
+<lib name="/usr/lib/libdev.so"></lib>
+<wandev name="dev_get_wan_para"></wandev>
+<man_ser_url name="devManageServerURL"></man_ser_url>
+<man_ser_user name="devManageServerUsername"></man_ser_user>
+<man_ser_pass name="devManageServerPassword"></man_ser_pass>
+<man_ser_crurl name="devManageServerConnectionRequestURL"></man_ser_crurl>
+<man_ser_cruser name="devManageServerConnectionRequestUsername"></man_ser_cruser>
+<man_ser_crpass name="devManageServerConnectionRequestPassword"></man_ser_crpass>
+<man_ser_pienable name="devManageServerPeriodicInformEnable"></man_ser_pienable>
+<man_ser_piinterval name="devManageServerPeriodicInformInterval"></man_ser_piinterval>
+<man_ser_upgradesmanaged name="devManageServerUpgradesManaged"></man_ser_upgradesmanaged>
+<install name="dev_first_install"></install>
+<manu name="dev_Manufacturer"></manu>
+<oui name="dev_ManufacturerOUI"></oui>
+<class name="dev_ProductClass"></class>
+<serial name="dev_asp_request_char#query#sysmgr-0#getenv#param#SERIAL_NUMBER"></serial>
+<product_id name="dev_asp_request_char#query#sysmgr-0#getenv#param#PRODUCT_ID"></product_id>
+<paramkey name="dev_ManageServer_ParameterKey"></paramkey>
+<upfig name="dev_getconfigfile"></upfig>
+<uplog name="dev_getsyslog"></uplog>
+<downsys name="get_flash_free_size"></downsys>
+<downkil name="kill_all_apps"></downkil>
+<downpar name="parse_data"></downpar>
+<download name="dev_download_image"></download>
+<taskwst name="write_config_file"></taskwst>
+<configbackup name="backup_config_file"></configbackup>
+<taskweb name="write_web"></taskweb>
+<taskfla name="flash_image"></taskfla>
+<taskreb name="reboot_dev"></taskreb>
+<trcmd name="TR_sys_cmd"></trcmd>
+<factory_reset name="factory_reset"></factory_reset>
+<diagnostic name="diagnostic"></diagnostic>
+<asdsave name="asd_save"></asdsave>
+<bootstrapflag name="dev_clr_bootstrap"></bootstrapflag>
+<bootflag name="dev_clr_boot"></bootflag>
+<set_firstusedate name="dev_set_firstusedate"></set_firstusedate>
+<getagentconf name="dev_get_agent_conf"></getagentconf>
+<setagentconf name="dev_set_agent_conf"></setagentconf>
+<gettr69conf name="dev_get_tr69_conf"></gettr69conf>
+<settr69conf name="dev_set_tr69_conf"></settr69conf>
+<asp_send_cmd name="dev_asp_send_cmd"></asp_send_cmd>
+<applycmd name="dev_apply_cmd"></applycmd>
+<saveconfig name="dev_save_config"></saveconfig>
+<ca_cert name="/etc/tr069/certi"></ca_cert>
+<cl_cert name=""></cl_cert>
+<cl_key name=""></cl_key>
+</TR069>

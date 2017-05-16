@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<META HTTP-EQUIV="Cache-control" CONTENT="NO-CACHE">
+	<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+	<META HTTP-EQUIV="EXPIRES" CONTENT="-1">
+	<script type="text/javascript" src="/lang.js"></script>
+	<script type="text/javascript" src="/js/Definitions.js"></script>
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/ui.js"></script>
+	<script type="text/javascript">
+	//<!--
+	if (top.frames.length!=0)
+	
+	top.location=self.document.location;
+	// -->
+	
+	</script>
+	<script type="text/javascript">
+	//<!--
+	
+	if(__DEF_HtmlTitle == "")
+		document.title = "AirTies " + (__DEF_ProductBoardTypeForLoginPage  == "" ? __DEF_BuildProfile : __DEF_ProductBoardTypeForLoginPage);
+	else
+		document.title = __DEF_HtmlTitle;
+	
+	function MM_reloadPage(init) {  //reloads the window if Nav4 resized
+	  if (init==true) with (navigator) {if ((appName=="Netscape")&&(parseInt(appVersion)==4)) {
+	    document.MM_pgW=innerWidth; document.MM_pgH=innerHeight; onresize=MM_reloadPage; }}
+	  else if (innerWidth!=document.MM_pgW || innerHeight!=document.MM_pgH) location.reload();
+	}
+	MM_reloadPage(true);
+	//-->
+	
+		$(document).ready(function()
+		{
+			parseURI();
+	
+			var query_string = "";
+			if (GETDATA["ErrorCode"] != undefined)
+			{
+				query_string = "?ErrorCode=" + GETDATA["ErrorCode"];
+			}
+	
+			if (GETDATA["redirect"] != undefined)
+			{
+				if(query_string != "") query_string += "&";
+				else (query_string = "?");
+				query_string += "redirect=" + GETDATA["redirect"];
+				if (GETDATA["self"] != undefined)
+				{
+					query_string += "&self=" + GETDATA["self"];
+				}
+			}
+	
+			$("#loginmain_frame").attr("src","http://"+ window.location.hostname +"/loginmain.html" + query_string);
+			showPage();
+		});
+	
+	
+	
+	</script>
+</head>
+
+<frameset rows="112,*" frameborder="NO" border="0" framespacing="0">
+  <frame src="top.html?page=login" name="topFrame" scrolling="NO" noresize >
+  <frame src="loginmain.html" id="loginmain_frame" name="mainFrame">
+</frameset>
+<noframes>
+
+<body>
+</body></noframes>
+</html>

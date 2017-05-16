@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+	<!-- Copyright AirTies Kablosuz Iletisim AR-GE Laboratuvarlari //-->
+	<!-- Copyright AirTies Wireless Networks R & D Laboratories   //-->
+	<head>
+		<title></title>
+
+		<META HTTP-EQUIV="Content-Type" CONTENT="text/html; CHARSET=UTF-8"/>
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta http-equiv="Expires" content="-1" />
+		<meta http-equiv="Cache-Control" content="must-revalidate" />
+
+		<script type="text/javascript" src="/lang.js"></script>
+		<script type="text/javascript" src="/js/Definitions.js"></script>
+		<script type="text/javascript" src="/js/ui.js"></script>
+		<script type="text/javascript" src="/js/airtiespatterns.js"></script>
+		<script type="text/javascript" src="/js/airlib.js"></script>
+		<script type="text/javascript" src="/js/jquery.js"></script>
+		<script type="text/javascript">
+			var GETDATA = new Array();
+			parseURI();
+
+			var mainFrameTarget = "homepage.html?PassCheck=1";
+			var topFrameTarget = "top.html?page=main&productboardtype=";
+			var menuFrameTarget = "menu_frame.html?wirelessMode=";
+
+			$(document).ready(function()
+			{
+				var pageTitle = "";
+				var obj = new uiObject();
+				obj.addQuery({module: "sysmgr", key: "productname"});
+				obj.addQuery({module: "sysmgr", key: "productboardtype"});
+				obj.addQuery({module: "cfgmgr", key: "isdefault"});
+				obj.addGet({module: "conn", key: "hostname"});
+				
+				obj.addQuery({module: "wireless_core", key: "op_mode_list"});
+				
+				obj.query();
+				
+				obj.addField({table: "productObj", module: "sysmgr", field: "productname"});
+				obj.addField({table: "productObj", module: "sysmgr", field: "productboardtype"});
+				obj.addField({table: "connObj", module: "conn", field: "hostname"});
+				
+				obj.addField({table: "opModeList", module: "wireless_core", field: "op_mode_list"});
+				
+				if(obj.tables['productObj'][0])
+				{
+					if(obj.tables['productObj'][0]['sysmgr']['productboardtype'].value != "")
+					{
+						topFrameTarget += obj.tables['productObj'][0]['sysmgr']['productboardtype'].value;
+					}
+					else
+					{
+						topFrameTarget += getDef("__DEF_ProductBoardType");
+					}
+					
+					if(obj.tables['productObj'][0]['sysmgr']['productname'].value != "")
+					{
+						pageTitle = "AirTies " + obj.tables['productObj'][0]['sysmgr']['productname'].value;
+					}
+					else
+					{
+						pageTitle = "AirTies " + getDef("__DEF_BuildProfile");
+					}
+				}
+
+				if(obj.tables["connObj"][0])
+				{
+					pageTitle = obj.tables["connObj"][0]["conn"]["hostname"].value;
+				}
+
+				if(getDef("__DEF_HtmlTitle") != "") pageTitle = getDef("__DEF_HtmlTitle");
+				
+				document.title = pageTitle;
+				
+				if (GETDATA["redirect"] != undefined)
+				{
+					mainFrameTarget = GETDATA["redirect"];
+				}
+				else
+				{
+					obj.addField({table: "mainObj", module: "cfgmgr", field: "isdefault"});
+					if(obj.tables['mainObj'][0])
+					{
+						if (eval(obj.tables['mainObj'][0]['cfgmgr']['isdefault'].value) && __DEF_DefaultsRedirectsQuickSetup == 1)
+						{
+							mainFrameTarget = "wizard.html";
+						}
+						
+					}
+				}
+				
+				var opModeList = obj.tables['opModeList'][0]['wireless_core']['op_mode_list'].value.split("|");
+				
+				if(opModeList[0] == "sta" && opModeList.length < 2) menuFrameTarget += "sta";
+				
+				loadPage();
+				//if(navigator.appName != "Microsoft Internet Explorer") $("#menuFrame").attr("scrolling", "auto");
+			});
+
+			function loadPage()
+			{
+				var a = new Array();
+				a = document.getElementsByName("mainFrame");
+				a[0].src = mainFrameTarget;
+				a = document.getElementsByName("topFrame");
+				a[0].src = topFrameTarget;
+				a = document.getElementsByName("menuFrame");
+				a[0].src = menuFrameTarget;
+				showPage();
+			}
+		</script>
+	</head>
+				<frameset rows="81,*" frameborder="NO" border="0" framespacing="0"><frame id="menuFrame" src="" name="menuFrame" scrolling="no" noresize><frameset rows="88,*" frameborder="NO" border="0" framespacing="0"><frame id="topFrame" src="" name="topFrame" scrolling="no" noresize ><frame name="mainFrame"></frameset></frameset>
+</html>

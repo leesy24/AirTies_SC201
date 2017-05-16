@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<META HTTP-EQUIV="Cache-control" CONTENT="NO-CACHE">
+	<META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
+	<META HTTP-EQUIV="EXPIRES" CONTENT="-1">
+
+	<link rel="stylesheet" href="/style/blueprint/screen.css" type="text/css" media="screen, projection" />
+	<link rel="stylesheet" href="/style/blueprint/print.css" type="text/css" media="print" /> 
+	<!--[if lt IE 8]>
+	  <link rel="stylesheet" href="/style/blueprint/ie.css" type="text/css" media="screen, projection" />
+	<![endif]-->
+
+	<link href="/style/style_top.css" rel="stylesheet" type="text/css">
+
+	<script type="text/javascript" src="/js/airtiespatterns.js"></script>
+	<script type="text/javascript" src="/js/ui.js"></script>
+	<script type="text/javascript" src="/js/jquery.js"></script>
+	<script type="text/javascript" src="/js/Definitions.js"></script>
+	<script language="javascript">
+
+	var GETDATA = new Array();
+	parseURI();
+
+	var queryCounter = 0;
+	
+	function handle_logout_response()
+	{
+		top.location.href="/login.html";
+	}
+
+	function DelBackendSession()
+	{
+		beginXML();
+		addCommand("webui-0", "delete_session","");
+		endXML();
+		sendAJAX(handle_logout_response);
+	}
+
+	function uiDoLogout()
+	{
+		DelBackendSession();
+	}
+
+	function uiDoRefresh()
+	{
+		top.mainFrame.location.href=top.mainFrame.location;
+		//top.contentFrame.location.href=top.contentFrame.location;
+	}
+
+	function send_lang_query(lang)
+	{
+
+		queryCounter++;
+		if(queryStatus == 0)
+		{
+		beginXML();
+		addCommand("cfgmgr-0", "begin_transaction", "webui-0");
+		addSet("webui-0", "language", lang);
+		addCommand("cfgmgr-0", "commit", "webui-0");
+		addCommand("cfgmgr-0", "end_transaction", "webui-0");
+		addCommand("cfgmgr-0", "save", "");
+		addCommand("webui-0","apply_lang","");
+		endXML();
+		var fn = parse_lang_response;
+		sendAJAX(fn);
+			queryCounter = 0;
+		}
+		else if(queryCounter <= queryRetryCount)
+		{
+			setTimeout("send_lang_query()", "1000");
+		}
+		else
+		{
+			queryCounter = 0;
+		}
+	}
+
+	function parse_lang_response()
+	{
+		//top.location.href="/main.html";
+		for (var i=0;i<top.frames.length;i++)
+		{
+			top.frames[i].location.reload(true);
+		}
+	}
+
+	function SelectLang(lang)
+	{
+		send_lang_query(lang);
+	}
+
+	$(document).ready(function()
+	{
+		if(GETDATA["page"] == "main") setLanguage();
+		if(typeof GETDATA["productboardtype"] === "undefined")
+			$("#productType").html(getDef("__DEF_ProductBoardTypeForLoginPage"));
+		else
+			$("#productType").html(GETDATA["productboardtype"]);
+		showPage();
+	});
+
+	function setLanguage()
+	{
+		var tableContent = "";
+		
+		if(getDef("__DEF_ShowTopLogoutItem") == 1)
+			tableContent += "<a href=\"#\" onclick=\"uiDoLogout()\">"+ __ML_exit +"</a> - <a href=\"#\" onClick=\"uiDoRefresh()\" >" + __ML_refresh + "</a>";
+
+		document.getElementById("language").innerHTML = tableContent;
+	}
+</script>
+</head>
+<body>
+	<div id="waitDiv" class="center">
+		<p>
+			<script language="javascript">document.write(__ML_please_wait);</script>
+		</p>
+		<img src="/images/ajax-loader.gif"/>
+	</div>
+	<div id="contentDiv">
+	<div id="head">
+		<div id="productType"></div>
+		<div id="language"></div>
+	</div>
+</div>
+</body>
+</html>

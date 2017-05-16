@@ -1,0 +1,8 @@
+#! /bin/sh
+
+echo "*** Restore to Factory Default Setting ***"
+psi -t cfg -o erase
+psi -t asd -o erase
+sleep 5
+reboot
+

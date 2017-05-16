@@ -1,0 +1,4 @@
+/dev/shm	d	755	0	0	-	-	-	-	-
+/dev/cua	c	630 	0	0	5	64	0	1	2
+/dev/rtc	c	640	0	0	10	135	-	-	-
+/dev/bcmxtmcfg0 c	666	0	0	228	0	-	-	-

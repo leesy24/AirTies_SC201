@@ -1,0 +1,53 @@
+#!/bin/sh
+
+#if [ "$#"  != "4" ]; then
+#    echo "Wrong number of parameters!"
+#    exit 1
+#fi
+
+/usr/bin/write_dl_conf /var/asd/dl.conf 2
+psi -o write -t asd
+
+ledctl blinkon power
+
+PCPID=`cat /var/run/pc.pid`
+kill -16 $PCPID
+
+echo "Wait for pc exit"
+sleep 5
+
+wget -O $1 $2
+
+if [ "$?" == "0" ]; then
+	sleep 4
+
+	echo "Download successful, kill unnecessary processes..."
+	HOSTAPD=`pidof hostapd`
+	PPPDPID=`cat /var/run/pppd.pid`
+	NASDPID=`pidof nasd`
+	HTTPDPID=`pidof -s httpd`
+	kill -9 $HTTPDPID
+	if [ -f $1 ]; then
+		sleep 3
+		echo "Starting Firmware Upgrade..."
+		psi -o write -t firmware -f $1 -r yes
+		if [ "$?" != "0" ]; then
+			echo "Flash image failed" > /var/asd/dl_error
+			psi -o write -t asd
+		fi
+	else
+		echo "Firmware upgrade file does not exist"
+		echo "Download failed" > /var/asd/dl_error
+		psi -o write -t asd 
+	fi
+else
+	echo "Couldn't get firmware, error code $? "
+	echo "Download failed" > /var/asd/dl_error
+	psi -o write -t asd 
+fi
+
+kill -15 $HOSTAPD $PPPDPID 
+sleep 1 
+kill -15 $NASDPID
+sleep 1
+reboot

@@ -1,0 +1,9 @@
+# System initialization.
+::sysinit:/etc/rc.d/rc.S
+
+# Run gettys in standard runlevels
+#::respawn:/sbin/getty 115200 ttyS0
+
+# Run shell as a tty device
+ttyS0::respawn:/bin/sh
+

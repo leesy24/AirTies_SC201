@@ -1,0 +1,16 @@
+#!/bin/sh
+
+if [ "$1" == "" ]; then
+	echo "Error: First parameter should be instance name"
+	exit 1
+fi
+
+if [ "$2" == "" ]; then
+	echo "Error: Second parameter should be variable name"
+	exit 1
+fi
+
+cli command cfgmgr-0:begin_transaction $1 >> /dev/null
+cli get $1:$2
+cli command cfgmgr-0:end_transaction $1 >> /dev/null
+

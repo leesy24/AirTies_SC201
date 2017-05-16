@@ -1,0 +1,25 @@
+#!/bin/sh
+LEDS="power adsl ppp eth0 usb wlan wlan2 phone1 phone2 phone3 line voip wps internet usb1 usb2"
+LED_COLORS="green red blue purple"
+
+if [ "$1" = "" ] ; then
+    echo "ledtest [on/off]  :turn all leds on/off"
+else if [ "$1" = "loop" ] ; then
+    for j in ${LED_COLORS}; do
+      for i in ${LEDS}; do
+	      /usr/bin/ledctl ledon $i $j >/dev/null 2>/dev/null
+      done
+      sleep 2
+    done
+else 
+	for i in ${LEDS}; do
+		/usr/bin/ledctl led$1 $i >/dev/null 2>/dev/null
+      done
+fi
+	
+fi
+
+
+
+
+

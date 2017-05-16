@@ -1,0 +1,32 @@
+#!/bin/sh
+
+IFS=$'\n'
+
+TMP_DIR=/tmp
+
+FILE=$1
+LZMA=${FILE}.lzma
+BASE=`basename $FILE`
+OPTS=$@
+
+#echo FILE=$FILE
+#echo LZMA=$LZMA
+#echo BASE=$BASE
+
+shift
+
+if [ -f $LZMA ]; then
+	echo "[insmod] extracting lzma archive"
+	cat ${LZMA} | unlzma - > ${TMP_DIR}/${BASE}
+	echo "[insmod] installing module '${BASE}'"
+	busybox insmod ${TMP_DIR}/${BASE} $@
+	echo "[insmod] removing leftover"
+	rm -rf ${TMP_DIR}/${BASE}
+elif [ -f $FILE ]; then
+	echo "[insmod] installing module '${BASE}'"
+	busybox insmod ${FILE} $@
+else
+	echo "[insmod] can't find module '${BASE}'"
+	exit 255
+fi
+

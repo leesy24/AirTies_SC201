@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "Running $0";
+
+# Install bcm947xx related modules
+KERNELVER=2.6.22
+
+insmod /lib/modules/$KERNELVER/kernel/drivers/net/ctf/ctf.ko
+insmod /lib/modules/$KERNELVER/kernel/drivers/net/emf/emf.ko
+insmod /lib/modules/$KERNELVER/kernel/drivers/net/igs/igs.ko
+
+#mdev stuff
+echo /sbin/mdev > /proc/sys/kernel/hotplug
+mkdir /dev/pts
+mount -t devpts devpts /dev/pts
+mdev -s
+makedevs -d /etc/device_table.txt /

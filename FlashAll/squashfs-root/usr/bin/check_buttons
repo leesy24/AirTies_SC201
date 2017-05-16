@@ -1,0 +1,54 @@
+#!/bin/sh
+
+killall check_reset
+
+if [ -e /proc/driver/wlanbutton ]; then
+	killall wlan_onoff
+fi
+
+if [ -e /proc/driver/wpsbutton ]; then
+	echo "Waiting for SETUP BUTTON:"
+	while [ 1 ]; do
+        	BTN=`cat /proc/driver/wpsbutton`
+	        if [ "$BTN" == "1" ] ; then
+        	        echo "****** SETUP BUTTON PRESSED ******";
+                	break;
+	        fi
+        	sleep 1
+	done
+fi
+
+echo 
+
+if [ -e /proc/driver/wlanbutton ]; then
+if [ -e /proc/driver/wlanbutton ]; then
+	echo "Waiting for WLAN BUTTON"
+	while [ 1 ]; do 
+        	if [ `cat /proc/driver/wlanbutton` = "1" ]; then 
+                	echo "****** WLAN ON/OFF BUTTON PRESSED ******"; 
+	                break; 
+        	fi
+	        sleep 1
+	done
+fi
+fi
+
+
+echo
+
+echo "Waiting for RESET BUTTON"
+while [ 1 ]; do 
+        if [ `cat /proc/driver/hwreset` = "1" ]; then 
+                echo "****** RESET BUTTON PRESSED ******"; 
+                break;
+        fi
+        sleep 1
+done
+
+if [ -e /proc/driver/wlanbutton ]; then
+	wlan_onoff &
+fi
+
+check_reset &
+
+exit

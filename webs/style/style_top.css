@@ -1,0 +1,32 @@
+/* 
+ * style_top.css
+ * Sky		
+ */
+
+a{
+	color: #424242;
+}
+
+a:hover{
+	color: #000000;
+}
+
+#head
+{
+	height: 88px;
+	background: #9D9FA2 url(/images/wifi-connector.gif) 100px no-repeat;
+}
+
+#language
+{
+	position: absolute;
+	top: 0;
+	right: 15px;
+	color: #000;
+}
+
+#productType
+{
+	font-size: 2.5em;
+	display: none;
+}

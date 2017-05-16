@@ -1,0 +1,8 @@
+#! /bin/sh
+
+cli command cfgmgr-0:begin_transaction wireless_ap-0
+cli set wireless_ap-0:ssid $1
+cli command cfgmgr-0:commit wireless_ap-0
+cli command cfgmgr-0:end_transaction wireless_ap-0
+cli command cfgmgr-0:save
+cli command wireless_ap-0:apply

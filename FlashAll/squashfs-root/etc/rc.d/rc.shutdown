@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo ========================
+echo REBOOTING DEVICE
+echo ========================
+echo start_timer > /proc/driver/shutdown
+cli command sysmgr-0:shutdown_prepare
+

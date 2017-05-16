@@ -1,0 +1,13 @@
+#!/bin/sh
+
+
+while [ "1" != "0" ]; do
+
+    BTN=`cat /proc/driver/hwreset`
+    if [ "$BTN" == "1" ] ; then
+	echo "****** BUTTON IS PRESSED ******";
+	exit;
+    fi
+    sleep 1
+done
+
